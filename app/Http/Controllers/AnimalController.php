@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\AnimalDataRequest;
 
 class AnimalController extends Controller
 {
@@ -31,40 +31,30 @@ class AnimalController extends Controller
         return view('animals.create');
     }
 
-    public function update(Request $request, $id)
+    public function update(AnimalDataRequest $request, $id)
     {
         $animals = session('animals');
         $animal = $animals[$id] ?? null;
 
         if (! $animal) {
-            return redirect('/animals')->with('error', 'Animal no encontrado');
+            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
         }
 
-        $animal['name'] = $request->input('name');
-        $animal['species'] = $request->input('species');
-        $animal['age'] = $request->input('age');
-
-        $animals[$id] = $animal;
-
+        $animals[$id] = $request->validated();
         session(['animals' => $animals]);
 
-        return redirect('/animals')->with('success', 'Animal actualizado correctamente');
+        return redirect()->route('animals.index')->with('success', 'Animal actualizado correctamente');
     }
 
-    public function store(Request $request)
+    public function store(AnimalDataRequest $request)
     {
+        $validatedData = $request->validated();
         $animals = session('animals');
-        // Genera un unique ID usando unique_id() y verifica que no exista en el array de animales
-        $nuevoId = uniqid();
-        $animals[$nuevoId] = [
-            'name' => $request->input('name'),
-            'species' => $request->input('species'),
-            'age' => $request->input('age'),
-        ];
-
+        $nuevoId = uniqid(); // Genera un ID único
+        $animals[$nuevoId] = $validatedData;
         session(['animals' => $animals]);
 
-        return redirect('/animals')->with('success', 'Animal agregado correctamente');
+        return redirect()->route('animals.index')->with('success', 'Animal agregado correctamente');
     }
 
     public function edit($id)
@@ -73,7 +63,7 @@ class AnimalController extends Controller
         $animal = $animals[$id] ?? null;
 
         if (! $animal) {
-            return redirect('/animals')->with('error', 'Animal no encontrado');
+            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
         }
 
         return view('animals.edit', ['id' => $id, 'animal' => $animal]);
@@ -85,13 +75,13 @@ class AnimalController extends Controller
         $animal = $animals[$id] ?? null;
 
         if (! $animal) {
-            return redirect('/animals')->with('error', 'Animal no encontrado');
+            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
         }
 
         unset($animals[$id]);
 
         session(['animals' => $animals]);
 
-        return redirect('/animals')->with('success', 'Animal eliminado correctamente');
+        return redirect()->route('animals.index')->with('success', 'Animal eliminado correctamente');
     }
 }

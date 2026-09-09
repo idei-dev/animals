@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-2xl font-bold text-white mb-6">Agregar Animal</h1>
 
-    <form action="{{ url('/animals') }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
+    <form action="{{ route('animals.store') }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
         @csrf
 
         <label for="name" class="block text-sm font-medium mb-1">Nombre</label>

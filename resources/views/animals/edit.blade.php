@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-2xl font-bold text-white mb-6">Editar Animal</h1>
 
-    <form action="{{ url('/animals/' . $id) }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
+    <form action="{{ route('animals.update', $id) }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
         @csrf
         @method('PUT')
 
