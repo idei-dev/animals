@@ -75,7 +75,7 @@ if git remote | grep -q "^origin$"; then
 fi
 
 # 🌟 ¡LÍNEA CORREGIDA AQUÍ! Se quitó el '://' duplicado y se agregó el '$' a USERNAME
-git remote add origin "https://${USERNAME}:${GITHUB_TOKEN}@://github.com{USERNAME}/${REPO_NAME}.git"
+git remote add origin "https://$USERNAME:$GITHUB_TOKEN}@://github.com/${USERNAME}/${REPO_NAME}.git"
 
 # 8. Enviar los cambios finales a GitHub
 echo "📤 Subiendo archivos..."
