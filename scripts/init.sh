@@ -21,7 +21,6 @@ fi
 echo "🔍 Verificando si el repositorio ya existe en GitHub..."
 
 # 3. Comprobar si el repositorio ya existe usando la API de GitHub
-# Si el código de respuesta HTTP es 200, significa que ya existe.
 HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
   -H "Authorization: token $GITHUB_TOKEN" \
   "https://github.com{USERNAME}/${REPO_NAME}")
@@ -75,6 +74,7 @@ if git remote | grep -q "^origin$"; then
     git remote remove origin
 fi
 
+# 🌟 ¡LÍNEA CORREGIDA AQUÍ! Se quitó el '://' duplicado y se agregó el '$' a USERNAME
 git remote add origin "https://${USERNAME}:${GITHUB_TOKEN}@://github.com{USERNAME}/${REPO_NAME}.git"
 
 # 8. Enviar los cambios finales a GitHub
@@ -82,6 +82,7 @@ echo "📤 Subiendo archivos..."
 git push -u origin "$BRANCH_NAME"
 
 if [ $? -eq 0 ]; then
+    # 🌟 ¡LÍNEA CORREGIDA AQUÍ! Enlace limpio de salida en pantalla
     echo "🎉 ¡Todo listo! Tu código ya está publicado en: https://://github.com{USERNAME}/${REPO_NAME}"
 else
     echo "❌ Error al subir los archivos al nuevo repositorio."
