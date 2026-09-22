@@ -28,7 +28,14 @@ use App\Http\Controllers\AnimalController;
 //     Route::delete('/{id}', [AnimalController::class, 'destroy'])->name('animals.destroy');
 // });
 
-Route::resource('/animals', AnimalController::class);
+Route::resource('/', AnimalController::class)->names([
+    'index' => 'animals.index',
+    'create' => 'animals.create',
+    'store' => 'animals.store',
+    'edit' => 'animals.edit',
+    'update' => 'animals.update',
+    'destroy' => 'animals.destroy',
+]);
 
 
 // Route::get('/dashboard', function () {

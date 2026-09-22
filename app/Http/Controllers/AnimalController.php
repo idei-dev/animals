@@ -53,7 +53,6 @@ class AnimalController extends Controller
         $nuevoId = uniqid(); // Genera un ID único
         $animals[$nuevoId] = $validatedData;
         session(['animals' => $animals]);
-
         return redirect()->route('animals.index')->with('success', 'Animal agregado correctamente');
     }
 

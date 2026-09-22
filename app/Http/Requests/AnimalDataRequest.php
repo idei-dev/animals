@@ -28,4 +28,17 @@ class AnimalDataRequest extends FormRequest
             'age' => 'required|integer|min:1|max:100',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'El nombre del animal es obligatorio.',
+            'species.required' => 'Debes ingresar la especie.',
+            'species.in' => 'La especie seleccionada no es válida.',
+            'age.required' => 'La edad es obligatoria.',
+            'age.integer' => 'La edad debe ser un número entero.',
+            'age.min' => 'La edad debe ser de al menos :min año.',
+            'age.max' => 'La edad no puede superar los :max años.',
+        ];
+    }
 }
