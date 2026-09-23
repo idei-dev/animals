@@ -7,7 +7,7 @@
         @csrf
 
         {{-- 1. (Opcional) Bloque al inicio del formulario con todos los errores --}}
-        @if ($errors->any())
+        <!-- @if ($errors->any())
             <div class="mb-4 rounded-md border border-red-500 bg-red-500/10 p-3 text-sm text-red-300">
                 <ul class="list-disc pl-5">
                     @foreach ($errors->all() as $error)
@@ -15,7 +15,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif -->
 
         {{-- Campo: Nombre --}}
         <label for="name" class="block text-sm font-medium mb-1">Nombre</label>

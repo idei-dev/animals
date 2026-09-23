@@ -50,9 +50,17 @@
         @endforeach
     </div>
 
-    <div class="flex justify-center mt-8">
+    <div class="flex justify-center mt-8 gap-4">
         <a href="{{ route('animals.create') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
             + Agregar Animal
         </a>
+
+        <form action="{{ route('animals.reset') }}" method="POST" class="inline-block">
+            @csrf
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" onclick="return confirm('¿Seguro que querés resetear la sesión?')">
+                Resetear sesión
+            </button>
+        </form>
+
     </div>
 @endsection

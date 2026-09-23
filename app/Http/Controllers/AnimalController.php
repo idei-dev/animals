@@ -9,11 +9,14 @@ class AnimalController extends Controller
     public function __construct()
     {
         if (! session()->has('animals')) {
+            $key1 = uniqid();
+            $key2 = uniqid();
+            $key3 = uniqid();
             session([
                 'animals' => [
-                    '1' => ['name' => 'Leo', 'species' => 'León', 'age' => 5],
-                    '2' => ['name' => 'Dora', 'species' => 'Elefante', 'age' => 10],
-                    '3' => ['name' => 'Nemo', 'species' => 'Pez Payaso', 'age' => 2],
+                    $key1 => ['name' => 'Leo',   'species' => 'León',        'age' => 5  ],
+                    $key2 => ['name' => 'Dora',  'species' => 'Elefante',    'age' => 10 ],
+                    $key3 => ['name' => 'Nemo',  'species' => 'Pez Payaso',  'age' => 2  ],
                 ],
             ]);
         }
@@ -31,7 +34,7 @@ class AnimalController extends Controller
         return view('animals.create');
     }
 
-    public function update(AnimalDataRequest $request, $id)
+    public function update(AnimalDataRequest $request, string $id)
     {
         $animals = session('animals');
         $animal = $animals[$id] ?? null;
@@ -56,7 +59,7 @@ class AnimalController extends Controller
         return redirect()->route('animals.index')->with('success', 'Animal agregado correctamente');
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
         $animals = session('animals');
         $animal = $animals[$id] ?? null;
@@ -68,7 +71,7 @@ class AnimalController extends Controller
         return view('animals.edit', ['id' => $id, 'animal' => $animal]);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $animals = session('animals');
         $animal = $animals[$id] ?? null;
@@ -82,5 +85,12 @@ class AnimalController extends Controller
         session(['animals' => $animals]);
 
         return redirect()->route('animals.index')->with('success', 'Animal eliminado correctamente');
+    }
+
+    public function reset()
+    {
+        session()->forget('animals');
+
+        return redirect()->route('animals.index')->with('success', 'Sesión reseteada correctamente');
     }
 }
