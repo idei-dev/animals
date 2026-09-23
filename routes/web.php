@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
 
-// Route::get(
-//     '/',
-//     function () {
-//         return view('welcome');
-//     }
-// );
+Route::get(
+    '/',
+    function () {
+        return view('welcome');
+    }
+);
 
 // Route::get('/usuarios', [UserController::class, 'index']); 
 
@@ -29,6 +29,8 @@ use App\Http\Controllers\AnimalController;
 // });
 
 Route::resource('/animals', AnimalController::class);
+
+Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
 
 
 // Route::get('/dashboard', function () {

@@ -41,37 +41,37 @@
                         $timeoutMs = (is_numeric($rawTimeout) && $rawTimeout < 100) ? (int)$rawTimeout * 1000 : (int)$rawTimeout;
                     @endphp
 
-                    @if (session('success') || session('exito'))
+                    @if (session('success'))
                         <div class="flash-alert mb-6 flex items-center justify-between rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4 text-emerald-200 shadow-sm transition-all duration-500" data-timeout="{{ $timeoutMs }}" role="alert">
                             <div class="flex items-center gap-3">
                                 <svg class="h-5 w-5 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span class="text-sm font-medium">{{ session('success') ?? session('exito') }}</span>
+                                <span class="text-sm font-medium">{{ session('success') }}</span>
                             </div>
                             <button type="button" onclick="this.closest('.flash-alert').remove()" class="ml-4 text-lg font-bold text-emerald-400 hover:text-emerald-200" title="Cerrar">&times;</button>
                         </div>
                     @endif
 
-                    @if (session('error') || session('danger'))
+                    @if (session('error'))
                         <div class="flash-alert mb-6 flex items-center justify-between rounded-lg border border-rose-500/40 bg-rose-500/10 p-4 text-rose-200 shadow-sm transition-all duration-500" data-timeout="{{ $timeoutMs }}" role="alert">
                             <div class="flex items-center gap-3">
                                 <svg class="h-5 w-5 shrink-0 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span class="text-sm font-medium">{{ session('error') ?? session('danger') }}</span>
+                                <span class="text-sm font-medium">{{ session('error') }}</span>
                             </div>
                             <button type="button" onclick="this.closest('.flash-alert').remove()" class="ml-4 text-lg font-bold text-rose-400 hover:text-rose-200" title="Cerrar">&times;</button>
                         </div>
                     @endif
 
-                    @if (session('warning') || session('advertencia'))
+                    @if (session('warning'))
                         <div class="flash-alert mb-6 flex items-center justify-between rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-amber-200 shadow-sm transition-all duration-500" data-timeout="{{ $timeoutMs }}" role="alert">
                             <div class="flex items-center gap-3">
                                 <svg class="h-5 w-5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                 </svg>
-                                <span class="text-sm font-medium">{{ session('warning') ?? session('advertencia') }}</span>
+                                <span class="text-sm font-medium">{{ session('warning')}}</span>
                             </div>
                             <button type="button" onclick="this.closest('.flash-alert').remove()" class="ml-4 text-lg font-bold text-amber-400 hover:text-amber-200" title="Cerrar">&times;</button>
                         </div>

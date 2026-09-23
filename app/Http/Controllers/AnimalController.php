@@ -2,27 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Contracts\AnimalServiceInterface;
 use App\Http\Requests\AnimalDataRequest;
 
 class AnimalController extends Controller
 {
-    public function __construct()
-    {
-        if (! session()->has('animals')) {
-            session([
-                'animals' => [
-                    '1' => ['name' => 'Leo', 'species' => 'León', 'age' => 5],
-                    '2' => ['name' => 'Dora', 'species' => 'Elefante', 'age' => 10],
-                    '3' => ['name' => 'Nemo', 'species' => 'Pez Payaso', 'age' => 2],
-                ],
-            ]);
-        }
-    }
+    public function __construct(
+        private AnimalServiceInterface $animalService
+    ) {}
 
     public function index()
     {
-        $animals = session('animals');
-
+        $animals = $this->animalService->all();
         return view('animals.index', ['animals' => $animals]);
     }
 
@@ -31,57 +23,47 @@ class AnimalController extends Controller
         return view('animals.create');
     }
 
-    public function update(AnimalDataRequest $request, $id)
-    {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
-
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
-        }
-
-        $animals[$id] = $request->validated();
-        session(['animals' => $animals]);
-
-        return redirect()->route('animals.index')->with('success', 'Animal actualizado correctamente');
-    }
-
     public function store(AnimalDataRequest $request)
     {
-        $validatedData = $request->validated();
-        $animals = session('animals');
-        $nuevoId = uniqid(); // Genera un ID único
-        $animals[$nuevoId] = $validatedData;
-        session(['animals' => $animals]);
-
-        return redirect()->route('animals.index')->with('success', 'Animal agregado correctamente');
+        $data = $request->validated();
+        $this->animalService->create($data);
+        return redirect()->route('animals.index')->with('success', 'Animal creado exitosamente.');
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
-
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
+        try {
+            $animal = $this->animalService->find($id);
+            return view('animals.edit', ['id' => $id, 'animal' => $animal]);
+        } catch (\Exception $e) {
+            return redirect()->route('animals.index')->with('error', $e->getMessage());
         }
-
-        return view('animals.edit', ['id' => $id, 'animal' => $animal]);
     }
 
-    public function destroy($id)
+    public function update(AnimalDataRequest $request, string $id)
     {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
-
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
+        $data = $request->validated();
+        try {
+            $this->animalService->update($id, $data);
+            return redirect()->route('animals.index')->with('success', 'Animal actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('animals.index')->with('error', $e->getMessage());
         }
+    }
 
-        unset($animals[$id]);
+    public function destroy(string $id)
+    {
+        try {
+            $this->animalService->delete($id);
+            return redirect()->route('animals.index')->with('success', 'Animal eliminado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('animals.index')->with('error', $e->getMessage());
+        }
+    }
 
-        session(['animals' => $animals]);
-
-        return redirect()->route('animals.index')->with('success', 'Animal eliminado correctamente');
+    public function reset()
+    {
+        $this->animalService->reset();
+        return redirect()->route('animals.index')->with('success', 'Todos los animales han sido eliminados.');
     }
 }

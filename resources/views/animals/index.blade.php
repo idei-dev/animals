@@ -31,7 +31,7 @@
                     <span class="text-3xl">{{ $icono }}</span>
                 </div>
 
-                <p class="text-slate-400 mt-2">{{ $animal['species'] }} · {{ $animal['age'] }} años</p>
+                <p class="text-slate-400 mt-2">{{ $animal['species'] }} - {{ $animal['age'] }} años</p>
 
                 <div class="flex gap-3 mt-3">
                     <a href="{{ route('animals.edit', $id) }}" class="text-blue-400 hover:underline">
@@ -50,9 +50,16 @@
         @endforeach
     </div>
 
-    <div class="flex justify-center mt-8">
+    <div class="flex justify-center mt-8 gap-4">
         <a href="{{ route('animals.create') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
             + Agregar Animal
         </a>
+        <form action="{{ route('animals.reset') }}" method="POST" class="inline">
+            @csrf
+            @method('POST')
+            <button type="submit" class="inline-block bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" onclick="return confirm('¿Seguro que querés resetear los datos?')">
+                Resetear Sesión
+            </button>
+        </form>
     </div>
 @endsection
