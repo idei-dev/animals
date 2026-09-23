@@ -1,32 +1,29 @@
 <?php
 
+/**
+ * Paso 4: El Controlador Evolucionado (Clean Code)
+ * Finalmente, refactorizamos el controlador original. Ahora es un "Thin Controller":
+ * solo recibe la petición, se la pasa al servicio, y devuelve la respuesta HTTP.
+ */
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimalDataRequest;
+use App\Contracts\AnimalServiceInterface;
 
 class AnimalController extends Controller
 {
-    public function __construct()
-    {
-        if (! session()->has('animals')) {
-            $key1 = uniqid();
-            $key2 = uniqid();
-            $key3 = uniqid();
-            session([
-                'animals' => [
-                    $key1 => ['name' => 'Leo',   'species' => 'León',        'age' => 5  ],
-                    $key2 => ['name' => 'Dora',  'species' => 'Elefante',    'age' => 10 ],
-                    $key3 => ['name' => 'Nemo',  'species' => 'Pez Payaso',  'age' => 2  ],
-                ],
-            ]);
-        }
+    // Inyección de dependencias a través del constructor
+    public function __construct(
+        private AnimalServiceInterface $animalService
+    ) {
     }
 
     public function index()
     {
-        $animals = session('animals');
-
-        return view('animals.index', ['animals' => $animals]);
+        return view('animals.index', [
+            'animals' => $this->animalService->all()
+        ]);
     }
 
     public function create()
@@ -34,63 +31,53 @@ class AnimalController extends Controller
         return view('animals.create');
     }
 
-    public function update(AnimalDataRequest $request, string $id)
-    {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
-
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
-        }
-
-        $animals[$id] = $request->validated();
-        session(['animals' => $animals]);
-
-        return redirect()->route('animals.index')->with('success', 'Animal actualizado correctamente');
-    }
-
     public function store(AnimalDataRequest $request)
     {
-        $validatedData = $request->validated();
-        $animals = session('animals');
-        $nuevoId = uniqid(); // Genera un ID único
-        $animals[$nuevoId] = $validatedData;
-        session(['animals' => $animals]);
-        return redirect()->route('animals.index')->with('success', 'Animal agregado correctamente');
+        $this->animalService->create($request->validated());
+
+        return redirect()->route('animals.index')
+            ->with('success', 'Animal agregado correctamente');
     }
 
     public function edit(string $id)
     {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
+        $animal = $this->animalService->find($id);
 
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
+        if (!$animal) {
+            return redirect()->route('animals.index')
+                ->with('error', 'Animal no encontrado');
         }
 
-        return view('animals.edit', ['id' => $id, 'animal' => $animal]);
+        return view('animals.edit', compact('id', 'animal'));
+    }
+
+    public function update(AnimalDataRequest $request, string $id)
+    {
+        if (!$this->animalService->update($id, $request->validated())) {
+            return redirect()->route('animals.index')
+                ->with('error', 'Animal no encontrado');
+        }
+
+        return redirect()->route('animals.index')
+            ->with('success', 'Animal actualizado correctamente');
     }
 
     public function destroy(string $id)
     {
-        $animals = session('animals');
-        $animal = $animals[$id] ?? null;
-
-        if (! $animal) {
-            return redirect()->route('animals.index')->with('error', 'Animal no encontrado');
+        if (!$this->animalService->delete($id)) {
+            return redirect()->route('animals.index')
+                ->with('error', 'Animal no encontrado');
         }
 
-        unset($animals[$id]);
-
-        session(['animals' => $animals]);
-
-        return redirect()->route('animals.index')->with('success', 'Animal eliminado correctamente');
+        return redirect()->route('animals.index')
+            ->with('success', 'Animal eliminado correctamente');
     }
 
     public function reset()
     {
-        session()->forget('animals');
+        $this->animalService->reset();
 
-        return redirect()->route('animals.index')->with('success', 'Sesión reseteada correctamente');
+        return redirect()->route('animals.index')
+            ->with('success', 'Sesión reseteada correctamente');
     }
 }
