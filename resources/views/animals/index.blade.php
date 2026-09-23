@@ -55,6 +55,15 @@
             + Agregar Animal
         </a>
 
+        {{--
+            Tema 0: Repaso de rutas y controladores en Laravel
+
+            Paso 0.2: Agregar nueva funcionalidad para resetear la lista de animales en la sesión.
+            Esto se hace a través de un formulario POST que apunta al método reset del AnimalController.
+            Usamos POST porque queremos que el usuario confirme la acción de resetear, y no queremos
+            que esto se haga accidentalmente a través de un enlace GET.
+        --}}
+
         <form action="{{ route('animals.reset') }}" method="POST" class="inline-block">
             @csrf
             <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" onclick="return confirm('¿Seguro que querés resetear la sesión?')">

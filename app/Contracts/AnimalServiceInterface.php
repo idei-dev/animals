@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Tema 2: Principio de Inversión de Dependencias (DIP) en Laravel
+ *
  * Paso 1: El Contrato (Definiendo la Interfaz)
  * Para cumplir con el DIP (depender de abstracciones, no de implementaciones), crearemos una interfaz.
  * Esto le dirá al controlador qué se puede hacer, sin importarle cómo se hace.

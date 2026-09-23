@@ -15,7 +15,7 @@ use App\Http\Requests\AnimalDataRequest;
  * 3.   Código repetido (Don't Repeat Yourself - DRY): La lógica de buscar si un animal existe
  *      ($animal = $animals[$id] ?? null; if(!$animal)...) se repite en update, edit y destroy.
  */
-class _AnimalController extends Controller
+class WrongAnimalController extends Controller
 {
     public function __construct()
     {
@@ -98,6 +98,14 @@ class _AnimalController extends Controller
         return redirect()->route('animals.index')->with('success', 'Animal eliminado correctamente');
     }
 
+    /**
+     * Tema 0: Repaso de rutas y controladores en Laravel
+     * Paso 0.3:
+     * Agregar el método reset al controlador para resetear la lista de animales en la sesión.
+     * Utilizamos session()->forget('animals') para eliminar la clave 'animals' de la sesión.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function reset()
     {
         session()->forget('animals');

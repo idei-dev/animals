@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Tema 2: Principio de Inversión de Dependencias (DIP) en Laravel
+ *
  * Paso 2: El Servicio (Extrayendo la lógica de negocio/datos)
  * Ahora creamos una clase concreta que implemente esta interfaz. Aquí es donde moveremos
  * toda la "basura" de la sesión que ensuciaba el controlador. Esto cumple con el SRP.

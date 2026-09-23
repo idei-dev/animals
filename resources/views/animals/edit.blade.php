@@ -1,3 +1,10 @@
+{{--
+
+    Tema 1: Validación de formularios en Laravel
+    Práctica en grupo: Agregar los errores de validación en el formulario de edición de animales.
+
+--}}
+
 @extends('layouts.animals')
 
 @section('content')

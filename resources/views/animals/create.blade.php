@@ -1,3 +1,16 @@
+{{--
+    Tema 1: Validación de formularios en Laravel
+
+    1: Crear un FormRequest para validar los datos del formulario.
+    2: Usar el FormRequest en el controlador para validar los datos.
+    3: -> Mostrar los errores de validación en la vista blade.
+
+    Esta plantilla blade contiene el formulario para agregar un nuevo animal.
+    Aquí explico las diferentes formas de mostrar errores de validación en el formulario,
+    que provienen de la validación en los métodos store y update del controlador AnimalController.
+    Específicamente, del FormRequest AnimalDataRequest.
+--}}
+
 @extends('layouts.animals')
 
 @section('content')
@@ -6,8 +19,9 @@
     <form action="{{ route('animals.store') }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
         @csrf
 
-        {{-- 1. (Opcional) Bloque al inicio del formulario con todos los errores --}}
-        <!-- @if ($errors->any())
+        {{-- a. Mostrar errores generales del formulario
+
+        @if ($errors->any())
             <div class="mb-4 rounded-md border border-red-500 bg-red-500/10 p-3 text-sm text-red-300">
                 <ul class="list-disc pl-5">
                     @foreach ($errors->all() as $error)
@@ -15,12 +29,16 @@
                     @endforeach
                 </ul>
             </div>
-        @endif -->
+        @endif
+
+        --}}
 
         {{-- Campo: Nombre --}}
         <label for="name" class="block text-sm font-medium mb-1">Nombre</label>
         <input type="text" id="name" name="name" value="{{ old('name') }}"
                class="w-full border-gray-300 rounded-md shadow-sm p-2 border text-black">
+
+        {{-- b. Mostrar errores específicos de cada campo --}}
         @error('name')
             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
         @enderror

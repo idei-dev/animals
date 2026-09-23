@@ -1,11 +1,12 @@
 <?php
 
 /**
+ * Tema 2: Principio de Inversión de Dependencias (DIP) en Laravel
+ *
  * Paso 4: El Controlador Evolucionado (Clean Code)
  * Finalmente, refactorizamos el controlador original. Ahora es un "Thin Controller":
  * solo recibe la petición, se la pasa al servicio, y devuelve la respuesta HTTP.
  */
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimalDataRequest;

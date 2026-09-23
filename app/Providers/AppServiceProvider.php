@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Tema 2: Principio de Inversión de Dependencias (DIP) en Laravel
+ *
  * Paso 3: El Service Provider (Enseñando a Laravel)
  * Aquí explicas la Inyección de Dependencias y el Contenedor de Servicios (IoC). El controlador
  * va a pedir un AnimalServiceInterface, y tenemos que decirle a Laravel qué entregarle.

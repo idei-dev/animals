@@ -30,6 +30,14 @@ use App\Http\Controllers\AnimalController;
 
 Route::resource('/animals', AnimalController::class);
 
+/**
+ * Tema 0: Repaso de rutas y controladores en Laravel
+ * Paso 0.1: Agregar nueva funcionalidad para resetear la lista de animales en la sesión.
+ * Esto se hace a través de una ruta POST que apunta al método reset del AnimalController.
+ *
+ * Usamos POST porque queremos que el usuario confirme la acción de resetear, y no queremos
+ * que esto se haga accidentalmente a través de un enlace GET.
+ */
 Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
 
 
