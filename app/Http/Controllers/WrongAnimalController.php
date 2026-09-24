@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimalDataRequest;
 
-class WrwongAnimalController extends Controller
+class WrongAnimalController extends Controller
 {
     public function __construct()
     {
