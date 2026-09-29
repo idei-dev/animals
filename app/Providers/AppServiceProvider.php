@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AnimalServiceInterface::class, SessionAnimalService::class);
+        $this->app->bind(AnimalServiceInterface::class, FileAnimalService::class);
     }
 
     /**
