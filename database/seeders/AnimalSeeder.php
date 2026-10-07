@@ -13,6 +13,10 @@ class AnimalSeeder extends Seeder
      */
     public function run(): void
     {
+        if (DB::table('animals')->count() > 0) {
+            return;
+        }
+
         $animals = [
             ['name' => 'Milo', 'species' => 'Perro', 'age' => 5],
             ['name' => 'Luna', 'species' => 'Gato', 'age' => 2],

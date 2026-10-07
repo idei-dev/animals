@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
         // Paso 3: Vinculamos la interfaz SpeciesServiceInterface con la implementación SpeciesMockService
         $this->app->singleton(
             \App\Contracts\SpeciesServiceInterface::class,
-            \App\Services\SpeciesMockService::class
+            \App\Services\SQLiteSpeciesService::class
+            // \App\Services\SpeciesMockService::class
         );
     }
 
