@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Contracts\AnimalServiceInterface;
-use App\Services\SQLAnimalService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +11,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AnimalServiceInterface::class, SQLAnimalService::class);
+        $this->app->bind(
+            \App\Contracts\AnimalServiceInterface::class,
+            \App\Services\SQLAnimalService::class
+        );
+
+        // Paso 3: Vinculamos la interfaz SpeciesServiceInterface con la implementación SpeciesMockService
+        $this->app->singleton(
+            \App\Contracts\SpeciesServiceInterface::class,
+            \App\Services\SpeciesMockService::class
+        );
     }
 
     /**

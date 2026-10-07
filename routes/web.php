@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\SpeciesController;
 
 Route::get(
     '/',
@@ -12,7 +13,7 @@ Route::get(
     }
 );
 
-// Route::get('/usuarios', [UserController::class, 'index']); 
+// Route::get('/usuarios', [UserController::class, 'index']);
 
 // Route::get('home', function () {
 //     return view('home');
@@ -31,6 +32,11 @@ Route::get(
 Route::resource('/animals', AnimalController::class);
 
 Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
+
+Route::resource('species', SpeciesController::class);
+
+Route::post('/species/reset', [SpeciesController::class, 'reset'])->name('species.reset');
+
 
 
 // Route::get('/dashboard', function () {
