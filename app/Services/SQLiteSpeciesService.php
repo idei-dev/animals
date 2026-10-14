@@ -64,14 +64,9 @@ class SQLiteSpeciesService implements SpeciesServiceInterface
 
     public function reset(): void
     {
-        // En SQLite / DB pura truncamos o vaciamos y repoblamos
         DB::table($this->table)->delete();
-
-        $now = now();
-        DB::table($this->table)->insert([
-            ['id' => 1, 'name' => 'Canino'],
-            ['id' => 2, 'name' => 'Felino'],
-            ['id' => 3, 'name' => 'Loro'],
-        ]);
+        DB::statement(
+            "DELETE FROM sqlite_sequence WHERE name='{$this->table}'"
+        );
     }
 }

@@ -3,20 +3,26 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Contracts\SpeciesServiceInterface;
 
 class SpeciesSeeder extends Seeder
 {
+    public function __construct(
+        protected SpeciesServiceInterface $speciesService
+    ) {}
+
     public function run(): void
     {
-        if (DB::table('species')->count() > 0) {
-            return;
-        }
-
-        DB::table('species')->insert([
+        $defaultSpecies = [
             ['name' => 'Perro'],
             ['name' => 'Gato'],
             ['name' => 'Loro'],
-        ]);
+        ];
+
+        $this->speciesService->reset();
+
+        foreach ($defaultSpecies as $data) {
+            $this->speciesService->create($data);
+        }
     }
 }

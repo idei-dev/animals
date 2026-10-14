@@ -11,16 +11,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
+        $this->app->singleton(
             \App\Contracts\AnimalServiceInterface::class,
             \App\Services\SQLAnimalService::class
         );
 
-        // Paso 3: Vinculamos la interfaz SpeciesServiceInterface con la implementación SpeciesMockService
         $this->app->singleton(
             \App\Contracts\SpeciesServiceInterface::class,
             \App\Services\SQLiteSpeciesService::class
-            // \App\Services\SpeciesMockService::class
         );
     }
 
