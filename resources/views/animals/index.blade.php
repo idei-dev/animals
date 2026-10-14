@@ -1,65 +1,61 @@
-@extends('layouts.animals')
+<x-layout>
+    <x-slot:title>Listado de Animales</x-slot:title>
 
-@section('content')
-    <h1 class="text-2xl font-bold text-white mb-6 text-center">Listado de Animales</h1>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        @foreach ($animals as $id => $animal)
-            @php
-                $especie = strtolower($animal['species']);
-                $icono = '🐾';
-                if (str_contains($especie, 'león') || str_contains($especie, 'leon')) {
-                    $icono = '🦁';
-                } elseif (str_contains($especie, 'elefante')) {
-                    $icono = '🐘';
-                } elseif (str_contains($especie, 'pez')) {
-                    $icono = '🐟';
-                } elseif (str_contains($especie, 'perro')) {
-                    $icono = '🐶';
-                } elseif (str_contains($especie, 'gato')) {
-                    $icono = '🐱';
-                }elseif (str_contains($especie, 'loro') || str_contains($especie, 'ave') || str_contains($especie, 'pájaro') || str_contains($especie, 'pajaro')) {
-                    $icono = '🦜';
-                }
-            @endphp
-
-            <div class="bg-slate-800 rounded-lg shadow p-4 text-white border border-slate-700">
-                <div class="flex items-start justify-between">
-                    <h2 class="text-lg font-semibold border border-slate-500 rounded px-2 py-1">
-                        {{ $animal['name'] }}
-                    </h2>
-                    <span class="text-3xl">{{ $icono }}</span>
-                </div>
-
-                <p class="text-slate-400 mt-2">{{ $animal['species'] }} - {{ $animal['age'] }} años</p>
-
-                <div class="flex gap-3 mt-3">
-                    <a href="{{ route('animals.edit', $id) }}" class="text-blue-400 hover:underline">
-                        Editar
-                    </a>
-
-                    <form action="{{ route('animals.destroy', $id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-400 hover:underline" onclick="return confirm('¿Seguro que querés eliminar este animal?')">
-                            Eliminar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-    <div class="flex justify-center mt-8 gap-4">
-        <a href="{{ route('animals.create') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
-            + Agregar Animal
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-100">Animales</h1>
+            <p class="text-sm text-slate-400 mt-1">Gestión y clasificación de animales.</p>
+        </div>
+        <a href="{{ route('animals.create') }}"
+           class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+            + Nuevo Animal
         </a>
-        <form action="{{ route('animals.reset') }}" method="POST" class="inline">
-            @csrf
-            @method('POST')
-            <button type="submit" class="inline-block bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" onclick="return confirm('¿Seguro que querés resetear los datos?')">
-                Resetear Sesión
-            </button>
-        </form>
     </div>
-@endsection
+
+    <div class="bg-slate-800/60 rounded-xl shadow-sm border border-slate-700 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-800 border-b border-slate-700 text-xs uppercase font-semibold text-slate-400 tracking-wider">
+                    <th class="py-3 px-6">ID</th>
+                    <th class="py-3 px-6">Nombre</th>
+                    <th class="py-3 px-6">Especie</th>
+                    <th class="py-3 px-6">Edad</th>
+                    <th class="py-3 px-6 text-right">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-700 text-sm">
+                @forelse ($animals as $item)
+                    <tr class="hover:bg-slate-700/40 transition-colors">
+                        <td class="py-4 px-6 font-mono text-xs text-slate-400">#{{ $item['id'] }}</td>
+                        <td class="py-4 px-6 font-medium text-slate-100">
+                            <a href="{{ route('animals.show', $item['id']) }}" class="hover:underline hover:text-indigo-300">
+                                {{ $item['name'] }}
+                            </a>
+                        </td>
+                        <td class="py-4 px-6 text-slate-400">{{ $item['species'] }}</td>
+                        <td class="py-4 px-6 text-slate-400">{{ $item['age'] }}</td>
+                        <td class="py-4 px-6 text-right">
+                            <div class="inline-flex items-center gap-2">
+                                <a href="{{ route('animals.show', $item['id']) }}" class="text-xs text-slate-400 hover:text-slate-100 font-medium">Ver</a>
+                                <span class="text-slate-600">|</span>
+                                <a href="{{ route('animals.edit', $item['id']) }}" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Editar</a>
+                                <span class="text-slate-600">|</span>
+                                <form action="{{ route('animals.destroy', $item['id']) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este animal?');" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs text-rose-400 hover:text-rose-300 font-medium">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="py-12 text-center text-slate-400">
+                            No hay animales registrados actualmente.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</x-layout>

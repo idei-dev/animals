@@ -14,6 +14,12 @@
             <div class="flex items-center gap-6">
                 <span class="text-xl font-bold text-indigo-400 tracking-tight">🐾 Animals & Species</span>
                 <nav class="flex gap-4 text-sm font-medium">
+                    <a href="{{ route('animals.index') }}"
+                       class="transition-colors hover:text-indigo-400 {{ request()->routeIs('animals.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400' }}">
+                        Animales
+                    </a>
+                </nav>
+                <nav class="flex gap-4 text-sm font-medium">
                     <a href="{{ route('species.index') }}"
                        class="transition-colors hover:text-indigo-400 {{ request()->routeIs('species.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400' }}">
                         Especies
@@ -37,6 +43,18 @@
                 </div>
             </div>
         @endsession
+
+        @if ($errors->any())
+            <div class="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-center justify-between text-sm shadow-sm">
+                <div class="flex items-center gap-2">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
 
         {{ $slot }}
     </main>

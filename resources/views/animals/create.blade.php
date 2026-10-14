@@ -1,35 +1,77 @@
-@extends('layouts.animals')
+<x-layout>
+    <x-slot:title>Crear Animal</x-slot:title>
 
-@section('content')
-<h1 class="text-2xl font-bold text-white mb-6">Agregar Animal</h1>
+    <div class="max-w-lg mx-auto">
+        <div class="mb-6">
+            <a href="{{ route('animals.index') }}" class="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline">← Volver al listado</a>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-100 mt-2">Crear Nuevo Animal</h1>
+        </div>
 
-<form action="{{ route('animals.store') }}" method="POST" class="bg-slate-800 rounded-lg shadow p-6 max-w-md text-white">
-    @csrf
+        <form action="{{ route('animals.store') }}" method="POST" class="bg-slate-800/60 p-6 rounded-xl shadow-sm border border-slate-700">
+            @csrf
 
-    <label for="name" class="block text-sm font-medium mb-1">Nombre</label>
-    <input type="text" id="name" name="name"
-        value="{{ old('name') }}"
-        @class([
-            'w-full border-gray-300 rounded-md shadow-sm mb-4 p-2 border text-black', 'bg-red-200' => $errors->has('name')])>
+            <div class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Nombre</label>
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           value="{{ old('name') }}"
+                           placeholder="Nombre del animal"
+                           @class([
+                               'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
+                               'border-rose-500 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('name'),
+                               'border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('name'),
+                           ])>
 
-    <label for="species" class="block text-sm font-medium mb-1">Especie</label>
-    <input type="text" id="species" name="species"
-        value="{{ old('species') }}"
-        class="w-full border-gray-300 rounded-md shadow-sm mb-4 p-2 border text-black">
-    @error('species')
-    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
+                    @error('name')
+                        <p class="text-xs text-rose-400 mt-1.5 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
 
-    <label for="age" class="block text-sm font-medium mb-1">Edad</label>
-    <input type="number" id="age" name="age"
-        value="{{ old('age') }}"
-        class="w-full border-gray-300 rounded-md shadow-sm mb-4 p-2 border text-black">
-    @error('age')
-    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
+                <div>
+                    <label for="species" class="block text-sm font-medium text-slate-300 mb-1">Especie</label>
+                    <input type="text"
+                           name="species"
+                           id="species"
+                           value="{{ old('species') }}"
+                           placeholder="Especie del animal"
+                           @class([
+                               'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
+                               'border-rose-500 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('species'),
+                               'border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('species'),
+                           ])>
 
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-        Guardar
-    </button>
-</form>
-@endsection
+                    @error('species')
+                        <p class="text-xs text-rose-400 mt-1.5 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="age" class="block text-sm font-medium text-slate-300 mb-1">Edad</label>
+                    <input type="number"
+                           name="age"
+                           id="age"
+                           value="{{ old('age') }}"
+                           min="0"
+                           step="1"
+                           placeholder="Edad del animal"
+                           @class([
+                               'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
+                               'border-rose-500 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('age'),
+                               'border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('age'),
+                           ])>
+
+                    @error('age')
+                        <p class="text-xs text-rose-400 mt-1.5 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-700">
+                    <a href="{{ route('animals.index') }}" class="px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 rounded-lg transition">Cancelar</a>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition shadow-sm">Guardar Animal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</x-layout>

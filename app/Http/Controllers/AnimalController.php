@@ -51,6 +51,16 @@ class AnimalController extends Controller
         }
     }
 
+    public function show(string $id)
+    {
+        try {
+            $animal = $this->animalService->find($id);
+            return view('animals.show', ['id' => $id, 'animal' => $animal]);
+        } catch (\Exception $e) {
+            return redirect()->route('animals.index')->with('error', $e->getMessage());
+        }
+    }
+
     public function destroy(string $id)
     {
         try {
