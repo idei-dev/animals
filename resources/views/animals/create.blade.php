@@ -31,16 +31,18 @@
 
                 <div>
                     <label for="species" class="block text-sm font-medium text-slate-300 mb-1">Especie</label>
-                    <input type="text"
-                           name="species"
-                           id="species"
-                           value="{{ old('species') }}"
-                           placeholder="Especie del animal"
-                           @class([
-                               'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
-                               'border-rose-500 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('species'),
-                               'border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('species'),
-                           ])>
+                    <select name="species_id"
+                            id="species_id"
+                            @class([
+                                'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
+                                'border-rose-500 bg-slate-900 text-slate-100 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('species'),
+                                'border-slate-600 bg-slate-900 text-slate-100 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('species'),
+                            ])>
+                        <option value="">Selecciona una especie</option>
+                        @foreach ($species as $speciesOption)
+                            <option value="{{ $speciesOption['id'] }}" @selected(old('species_id') == $speciesOption)>{{ $speciesOption['name'] }}</option>
+                        @endforeach
+                    </select>
 
                     @error('species')
                         <p class="text-xs text-rose-400 mt-1.5 font-medium">{{ $message }}</p>

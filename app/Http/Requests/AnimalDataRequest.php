@@ -18,15 +18,10 @@ class AnimalDataRequest extends FormRequest
 
     public function prepareForValidation()
     {
+        // PASO 4: Normalizamos el nombre del animal antes de la validación
         if ($this->has('name')) {
             $this->merge([
                 'name' => Str::title(trim($this->input('name'))),
-            ]);
-        }
-
-        if ($this->has('species')) {
-            $this->merge([
-                'species' => Str::lower(trim($this->input('species'))),
             ]);
         }
     }
@@ -38,9 +33,10 @@ class AnimalDataRequest extends FormRequest
      */
     public function rules(): array
     {
+        // PASO 3: Definimos las reglas de validación para los datos del animal y reemplazamos la validación de 'species' por 'species_id'
         return [
             'name' => 'required|string|max:255',
-            'species' => 'required|string|in:león,elefante,pez payaso,gato,perro,conejo,caballo,oso,pájaro,tortuga',
+            'species_id' => 'required|int',
             'age' => 'required|integer|min:3|max:30',
         ];
     }
@@ -51,9 +47,7 @@ class AnimalDataRequest extends FormRequest
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
             'name.max' => 'El nombre no puede tener más de :max caracteres.',
-            'species.required' => 'La especie es obligatoria.',
-            'species.string' => 'La especie debe ser una cadena de texto.',
-            'species.in' => 'La especie ":input" no es válida. Puede ser: :values.',
+            'species_id.required' => 'La especie es obligatoria.',
             'age.required' => 'La edad es obligatoria.',
             'age.integer' => 'La edad debe ser un número entero.',
             'age.min' => 'La edad debe ser al menos :min años.',

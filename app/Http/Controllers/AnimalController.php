@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\SpeciesServiceInterface;
 use Illuminate\Http\Request;
 use App\Contracts\AnimalServiceInterface;
 use App\Http\Requests\AnimalDataRequest;
@@ -9,8 +10,10 @@ use App\Http\Requests\AnimalDataRequest;
 class AnimalController extends Controller
 {
     public function __construct(
+        private SpeciesServiceInterface $speciesService,
         private AnimalServiceInterface $animalService
-    ) {}
+    ) {
+    }
 
     public function index()
     {
@@ -20,7 +23,10 @@ class AnimalController extends Controller
 
     public function create()
     {
-        return view('animals.create');
+        $species = $this->speciesService->all();
+        return view('animals.create', [
+            'species' => $species
+        ]);
     }
 
     public function store(AnimalDataRequest $request)
@@ -34,7 +40,13 @@ class AnimalController extends Controller
     {
         try {
             $animal = $this->animalService->find($id);
-            return view('animals.edit', ['id' => $id, 'animal' => $animal]);
+            $species = $this->speciesService->all();
+            return view('animals.edit', [
+                'id' => $id,
+                'animal' => $animal,
+                'species_id' => $animal['species_id'],
+                'species' => $species
+            ]);
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
         }

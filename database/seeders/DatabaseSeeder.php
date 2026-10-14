@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // PASO 1: Cambiar el orden de los seeders para que SpeciesSeeder se ejecute antes que AnimalSeeder
         $this->call([
-            AnimalSeeder::class,
             SpeciesSeeder::class,
+            AnimalSeeder::class,
         ]);
     }
 }

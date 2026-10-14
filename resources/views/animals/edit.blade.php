@@ -31,19 +31,21 @@
                 </div>
 
                 <div>
-                    <label for="species" class="block text-sm font-medium text-slate-300 mb-1">Especie</label>
-                    <input type="text"
-                           name="species"
-                           id="species"
-                           placeholder="Ej. Reptil, Anfibio..."
-                           value="{{ old('species', $animal['species']) }}"
-                           @class([
-                               'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
-                               'border-rose-500 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('species'),
-                               'border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-500 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('species'),
-                           ])>
+                    <label for="species_id" class="block text-sm font-medium text-slate-300 mb-1">Especie</label>
+                    <select name="species_id"
+                            id="species_id"
+                            @class([
+                                'w-full px-3.5 py-2 rounded-lg border text-sm transition focus:outline-none focus:ring-2',
+                                'border-rose-500 bg-slate-900 text-slate-100 focus:border-rose-400 focus:ring-rose-500/20' => $errors->has('species_id'),
+                                'border-slate-600 bg-slate-900 text-slate-100 focus:border-indigo-400 focus:ring-indigo-500/20' => ! $errors->has('species_id'),
+                            ])>
+                        <option value="">Selecciona una especie</option>
+                        @foreach ($species as $speciesItem)
+                            <option value="{{ $speciesItem['id'] }}" @selected(old('species_id', $animal['species_id']) == $speciesItem['id'])>{{ $speciesItem['name'] }}</option>
+                        @endforeach
+                    </select>
 
-                    @error('species')
+                    @error('species_id')
                         <p class="text-xs text-rose-400 mt-1.5 font-medium">{{ $message }}</p>
                     @enderror
                 </div>

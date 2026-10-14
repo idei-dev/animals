@@ -11,7 +11,14 @@ class SQLAnimalService implements AnimalServiceInterface
 
     public function all(): array
     {
-        $rows = DB::select('SELECT id, name, species, age FROM animals');
+        $rows = DB::select(
+            'SELECT animals.id AS "id",
+                animals.name AS "name",
+                species.name AS "species",
+                animals.age AS "age"
+                FROM animals
+                JOIN species ON animals.species_id = species.id'
+        );
 
         $result = array_map(function ($row) {
             return (array) $row;
@@ -22,7 +29,17 @@ class SQLAnimalService implements AnimalServiceInterface
 
     public function find(string $id): array
     {
-        $row = DB::selectOne('SELECT id, name, species, age FROM animals WHERE id = ?', [$id]);
+        $row = DB::selectOne(
+            'SELECT animals.id AS "id",
+                animals.name AS "name",
+                species.name AS "species",
+                species.id AS "species_id",
+                animals.age AS "age"
+                FROM animals
+                JOIN species ON animals.species_id = species.id
+                WHERE animals.id = ?',
+            [$id]
+        );
 
         if (!$row) {
             AnimalNotFoundException::forId($id);
@@ -33,9 +50,15 @@ class SQLAnimalService implements AnimalServiceInterface
 
     public function create(array $data): array
     {
+        // PASO 3: Reemplazar la columna species por species_id en la sentencia SQL
         DB::insert(
-            'INSERT INTO animals (name, species, age) VALUES (?, ?, ?)',
-            [$data['name'], $data['species'], $data['age']]
+            'INSERT INTO animals (name, species_id, age)
+                VALUES (?, ?, ?)',
+            [
+                $data['name'],
+                $data['species_id'],
+                $data['age']
+            ]
         );
 
         $id = DB::getPdo()->lastInsertId();
@@ -50,10 +73,10 @@ class SQLAnimalService implements AnimalServiceInterface
 
         // 2. Sentencia SQL con los nuevos datos:
         DB::update(
-            'UPDATE animals SET name = ?, species = ?, age = ? WHERE id = ?',
+            'UPDATE animals SET name = ?, species_id = ?, age = ? WHERE id = ?',
             [
                 $data['name'],
-                $data['species'],
+                $data['species_id'],
                 (int) $data['age'],
                 $id
             ]
