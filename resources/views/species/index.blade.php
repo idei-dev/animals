@@ -32,8 +32,6 @@
                         </td>
                         <td class="py-4 px-6 text-right">
                             <div class="inline-flex items-center gap-2">
-                                <a href="{{ route('species.show', $item['id']) }}" class="text-xs text-slate-400 hover:text-slate-100 font-medium">Ver</a>
-                                <span class="text-slate-600">|</span>
                                 <a href="{{ route('species.edit', $item['id']) }}" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Editar</a>
                                 <span class="text-slate-600">|</span>
                                 <form action="{{ route('species.destroy', $item['id']) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta especie?');" class="inline">

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contracts\AnimalServiceInterface;
+use App\Contracts\SpeciesServiceInterface;
 use App\Http\Requests\AnimalDataRequest;
 
 class AnimalController extends Controller
 {
     public function __construct(
-        private AnimalServiceInterface $animalService
+        private AnimalServiceInterface $animalService,
+        private SpeciesServiceInterface $speciesService
     ) {}
 
     public function index()
@@ -20,7 +22,8 @@ class AnimalController extends Controller
 
     public function create()
     {
-        return view('animals.create');
+        $species = $this->speciesService->all();
+        return view('animals.create', ['species' => $species]);
     }
 
     public function store(AnimalDataRequest $request)
@@ -33,8 +36,9 @@ class AnimalController extends Controller
     public function edit(string $id)
     {
         try {
+            $species = $this->speciesService->all();
             $animal = $this->animalService->find($id);
-            return view('animals.edit', ['id' => $id, 'animal' => $animal]);
+            return view('animals.edit', ['id' => $id, 'animal' => $animal, 'species' => $species]);
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
         }
@@ -46,6 +50,16 @@ class AnimalController extends Controller
         try {
             $this->animalService->update($id, $data);
             return redirect()->route('animals.index')->with('success', 'Animal actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('animals.index')->with('error', $e->getMessage());
+        }
+    }
+
+    public function show(string $id)
+    {
+        try {
+            $animal = $this->animalService->find($id);
+            return view('animals.show', ['id' => $id, 'animal' => $animal]);
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
         }

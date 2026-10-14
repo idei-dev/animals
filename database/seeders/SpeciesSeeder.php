@@ -17,6 +17,8 @@ class SpeciesSeeder extends Seeder
             ['name' => 'Perro'],
             ['name' => 'Gato'],
             ['name' => 'Loro'],
+            ['name' => 'León'],
+            ['name' => 'Pez payaso'],
         ];
 
         $this->speciesService->reset();

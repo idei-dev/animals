@@ -19,11 +19,11 @@ class AnimalSeeder extends Seeder
     public function run(): void
     {
         $animals = [
-            ['name' => 'Milo', 'species' => 'Perro', 'age' => 5],
-            ['name' => 'Luna', 'species' => 'Gato', 'age' => 2],
-            ['name' => 'Paco', 'species' => 'Loro', 'age' => 12],
-            ['name' => 'Simba', 'species' => 'León', 'age' => 4],
-            ['name' => 'Nemo', 'species' => 'Pez payaso', 'age' => 1],
+            ['name' => 'Milo', 'species_id' => 1, 'age' => 5],
+            ['name' => 'Luna', 'species_id' => 2, 'age' => 2],
+            ['name' => 'Paco', 'species_id' => 3, 'age' => 12],
+            ['name' => 'Simba', 'species_id' => 4, 'age' => 4],
+            ['name' => 'Nemo', 'species_id' => 5, 'age' => 1],
         ];
 
         $this->animalService->reset();

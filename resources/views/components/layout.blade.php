@@ -14,8 +14,14 @@
             <div class="flex items-center gap-6">
                 <span class="text-xl font-bold text-indigo-400 tracking-tight">🐾 Animals & Species</span>
                 <nav class="flex gap-4 text-sm font-medium">
+                    <a href="{{ route('animals.index') }}"
+                       class="transition-colors hover:text-indigo-400 {{ request()->routeIs('animals.*') ? 'text-indigo-500 font-bold' : 'text-slate-400' }}">
+                        Animales
+                    </a>
+                </nav>
+                <nav class="flex gap-4 text-sm font-medium">
                     <a href="{{ route('species.index') }}"
-                       class="transition-colors hover:text-indigo-400 {{ request()->routeIs('species.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400' }}">
+                       class="transition-colors hover:text-indigo-400 {{ request()->routeIs('species.*') ? 'text-indigo-500 font-bold' : 'text-slate-400' }}">
                         Especies
                     </a>
                 </nav>
@@ -37,6 +43,26 @@
                 </div>
             </div>
         @endsession
+
+        @if ($errors->any())
+            <div class="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm shadow-sm">
+
+                <div class="flex items-center gap-2">
+                    <svg class="w-10 h-10 text-rose-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    <span>Se han producido errores en el formulario:</span>
+                </div>
+
+                <div class="mt-2">
+                    <ul class="ml-4 list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
 
         {{ $slot }}
     </main>
