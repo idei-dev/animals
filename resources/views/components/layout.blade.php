@@ -64,6 +64,10 @@
             </div>
         @endif
 
+        @isset($title)
+            <h1 class="mb-3 text-xl font-bold text-slate-100">{{ $title }}</h1>
+        @endisset
+
         {{ $slot }}
     </main>
 

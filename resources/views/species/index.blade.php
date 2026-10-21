@@ -1,11 +1,12 @@
-<x-layout>
-    <x-slot:title>Listado de Especies</x-slot:title>
+<x-app-layout>
+
+   <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Listado de Especies
+        </h2>
+    </x-slot>
 
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-100">Especies</h1>
-            <p class="text-sm text-slate-400 mt-1">Gestión y clasificación de especies animales.</p>
-        </div>
         <a href="{{ route('species.create') }}"
            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
             + Nueva Especie

@@ -1,10 +1,13 @@
-<x-layout>
-    <x-slot:title>Editar Animal</x-slot:title>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Editar Animal
+        </h2>
+    </x-slot>
 
     <div class="max-w-lg mx-auto">
         <div class="mb-6">
             <a href="{{ route('animals.index') }}" class="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline">← Volver al listado</a>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-100 mt-2">Editar Animal</h1>
         </div>
 
         <form action="{{ route('animals.update', $id) }}" method="POST" class="bg-slate-800/60 p-6 rounded-xl shadow-sm border border-slate-700">
@@ -75,4 +78,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+</x-app-layout>

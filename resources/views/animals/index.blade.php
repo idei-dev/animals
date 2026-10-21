@@ -1,13 +1,14 @@
-<x-layout>
-    <x-slot:title>Listado de Animales</x-slot:title>
+<x-app-layout>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Lista de Animales
+        </h2>
+    </x-slot>
 
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-100">Animales</h1>
-            <p class="text-sm text-slate-400 mt-1">Gestión animales.</p>
-        </div>
         <a href="{{ route('animals.create') }}"
-           class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
             + Nuevo animal
         </a>
     </div>
@@ -15,7 +16,8 @@
     <div class="bg-slate-800/60 rounded-xl shadow-sm border border-slate-700 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
-                <tr class="bg-slate-800 border-b border-slate-700 text-xs uppercase font-semibold text-slate-400 tracking-wider">
+                <tr
+                    class="bg-slate-800 border-b border-slate-700 text-xs uppercase font-semibold text-slate-400 tracking-wider">
                     <th class="py-3 px-2">ID</th>
                     <th class="py-3 px-5">Nombre del Animal</th>
                     <th class="py-3 px-3 text-right">Edad</th>
@@ -28,7 +30,8 @@
                     <tr class="hover:bg-slate-700/40 transition-colors">
                         <td class="py-4 px-2 font-mono text-xs text-slate-400">#{{ $item['id'] }}</td>
                         <td class="py-4 px-5 font-medium text-slate-100">
-                            <a href="{{ route('animals.show', $item['id']) }}" class="hover:underline hover:text-indigo-300">
+                            <a href="{{ route('animals.show', $item['id']) }}"
+                                class="hover:underline hover:text-indigo-300">
                                 {{ $item['name'] }}
                             </a>
                         </td>
@@ -40,12 +43,16 @@
                         </td>
                         <td class="py-4 px-6 text-right">
                             <div class="inline-flex items-center gap-2">
-                                <a href="{{ route('animals.edit', $item['id']) }}" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Editar</a>
+                                <a href="{{ route('animals.edit', $item['id']) }}"
+                                    class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Editar</a>
                                 <span class="text-slate-600">|</span>
-                                <form action="{{ route('animals.destroy', $item['id']) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta especie?');" class="inline">
+                                <form action="{{ route('animals.destroy', $item['id']) }}" method="POST"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar esta especie?');"
+                                    class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-xs text-rose-400 hover:text-rose-300 font-medium">Eliminar</button>
+                                    <button type="submit"
+                                        class="text-xs text-rose-400 hover:text-rose-300 font-medium">Eliminar</button>
                                 </form>
                             </div>
                         </td>
@@ -60,4 +67,4 @@
             </tbody>
         </table>
     </div>
-</x-layout>
+</x-app-layout>
