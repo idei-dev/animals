@@ -13,10 +13,11 @@ Route::get(
     }
 );
 
-// Route::get('/usuarios', [UserController::class, 'index']);
+Route::middleware(['auth', 'role:admin'])->resource('/users', UserController::class);
 
 Route::resource('/animals', AnimalController::class);
 Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
+
 Route::resource('species', SpeciesController::class);
 Route::post('/species/reset', [SpeciesController::class, 'reset'])->name('species.reset');
 
