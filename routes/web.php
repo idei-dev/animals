@@ -13,12 +13,14 @@ Route::get(
     }
 );
 
-// Route::get('/usuarios', [UserController::class, 'index']);
+Route::middleware(['auth', 'is_admin'])->resource('/users', UserController::class);
 
-Route::resource('/animals', AnimalController::class);
-Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
-Route::resource('species', SpeciesController::class);
-Route::post('/species/reset', [SpeciesController::class, 'reset'])->name('species.reset');
+Route::middleware('auth')->group(function () {
+    Route::resource('/animals', AnimalController::class);
+    Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
+    Route::resource('species', SpeciesController::class);
+    Route::post('/species/reset', [SpeciesController::class, 'reset'])->name('species.reset');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Contracts\AnimalServiceInterface;
 use App\Contracts\SpeciesServiceInterface;
+use App\Contracts\UserServiceInterface;
 use App\Services\SQLAnimalService;
 use App\Services\SQLiteSpeciesService;
+use App\Services\SQLiteUserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(
+            UserServiceInterface::class,
+            SQLiteUserService::class
+        );
+
         $this->app->singleton(
             AnimalServiceInterface::class,
             SQLAnimalService::class
