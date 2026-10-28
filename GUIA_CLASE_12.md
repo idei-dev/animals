@@ -1,4 +1,4 @@
-# 📖 Manual de Cátedra: Arquitectura de Servicios, Controladores de Recursos y Control de Acceso por Roles en Laravel
+# Arquitectura de Servicios, Controladores de Recursos y Control de Acceso por Roles en Laravel
 
 **Carrera:** Tecnicatura Universitaria en Programación Web  
 **Materia:** Programación Web Avanzada / Taller de Desarrollo Web  
@@ -7,7 +7,7 @@
 
 ---
 
-## 🧭 Planificación y Dinámica Git de la Clase
+## Planificación y Dinámica Git de la Clase
 
 Para garantizar una sesión fluida y sin tropiezos técnicos, seguiremos esta estrategia de ramas:
 
@@ -25,9 +25,7 @@ Para garantizar una sesión fluida y sin tropiezos técnicos, seguiremos esta es
 3. **Al finalizar la demostración:** Mergeas `clase12` en `main` y haces `git push`.
 4. **Laboratorio de los alumnos (Sprint de 2 horas):** Los alumnos clonan/actualizan `main` y completan el CRUD de usuarios tomando como referencia el módulo existente de especies (`species`).
 
----
-
-# PARTE 1: Demostración en Vivo (Guión Paso a Paso para el Docente)
+# PARTE 1: Demostración
 
 ```
                        ARQUITECTURA DE LA APLICACIÓN
@@ -330,7 +328,7 @@ class UserController extends Controller
 
 #### 🛠️ Archivo: `resources/views/users/index.blade.php`
 
-```blade
+```html
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -473,9 +471,7 @@ php artisan serve
 3. **Acceso como administrador:** Iniciar sesión con `admin@example.com` (password `11111111`) e ingresar a `/users`.  
    ➔ *Resultado:* Carga exitosa del listado de usuarios con código **200 OK**.
 
----
-
-# PARTE 2: Consigna de Laboratorio (Sprint de 2 Horas para Alumnos)
+# PARTE 2: Consigna de Laboratorio
 
 > ### ⏱️ Duración: 2 Horas reloj
 > **Modalidad:** Individual / Presencial en Máquina  
