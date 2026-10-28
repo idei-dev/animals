@@ -56,14 +56,14 @@ class SQLiteSpeciesService implements SpeciesServiceInterface
         /**
          * INSERT INTO species (name) VALUES ($data['name'])
          * SELECT * FROM species WHERE id = $id
-         * 
+         *
          * Pseudocódigo:
          * 1. Insertar en la tabla $this->table los datos de $data
          * 2. Obtener el ID del registro insertado
          * 3. Buscar y devolver el registro con ese ID
          */
         $id = DB::table($this->table)->insertGetId([
-            'name' => $data['name']
+            'name' => $data['name'],
         ]);
 
         return $this->find((string) $id);
@@ -74,7 +74,7 @@ class SQLiteSpeciesService implements SpeciesServiceInterface
         $affected = DB::table($this->table)
             ->where('id', $id)
             ->update([
-                'name' => $data['name']
+                'name' => $data['name'],
             ]);
 
         if ($affected === 0 && ! $this->find($id)) {

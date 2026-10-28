@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Lista de Animales
         </h2>
     </x-slot>
@@ -13,11 +13,11 @@
         </a>
     </div>
 
-    <div class="bg-slate-800/60 rounded-xl shadow-sm border border-slate-700 overflow-hidden">
+    <div class="bg-white dark:bg-slate-800/60 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr
-                    class="bg-slate-800 border-b border-slate-700 text-xs uppercase font-semibold text-slate-400 tracking-wider">
+                    class="bg-gray-50 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 text-xs uppercase font-semibold text-gray-500 dark:text-slate-400 tracking-wider">
                     <th class="py-3 px-2">ID</th>
                     <th class="py-3 px-5">Nombre del Animal</th>
                     <th class="py-3 px-3 text-right">Edad</th>
@@ -25,42 +25,42 @@
                     <th class="py-3 px-6 text-right">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-700 text-sm">
+            <tbody class="divide-y divide-gray-200 dark:divide-slate-700 text-sm">
                 @forelse ($animals as $item)
-                    <tr class="hover:bg-slate-700/40 transition-colors">
-                        <td class="py-4 px-2 font-mono text-xs text-slate-400">#{{ $item['id'] }}</td>
-                        <td class="py-4 px-5 font-medium text-slate-100">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700/40 transition-colors">
+                        <td class="py-4 px-2 font-mono text-xs text-gray-500 dark:text-slate-400">#{{ $item['id'] }}</td>
+                        <td class="py-4 px-5 font-medium text-gray-900 dark:text-slate-100">
                             <a href="{{ route('animals.show', $item['id']) }}"
-                                class="hover:underline hover:text-indigo-300">
+                                class="hover:underline text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">
                                 {{ $item['name'] }}
                             </a>
                         </td>
-                        <td class="py-4 px-3 text-right font-medium text-slate-100">
+                        <td class="py-4 px-3 text-right font-medium text-gray-900 dark:text-slate-100">
                             {{ $item['age'] }}
                         </td>
-                        <td class="py-4 px-6 text-left font-medium text-slate-100">
+                        <td class="py-4 px-6 text-left font-medium text-gray-900 dark:text-slate-100">
                             {{ $item['species'] }}
                         </td>
                         <td class="py-4 px-6 text-right">
                             <div class="inline-flex items-center gap-2">
                                 <a href="{{ route('animals.edit', $item['id']) }}"
-                                    class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Editar</a>
-                                <span class="text-slate-600">|</span>
+                                    class="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium">Editar</a>
+                                <span class="text-gray-300 dark:text-slate-600">|</span>
                                 <form action="{{ route('animals.destroy', $item['id']) }}" method="POST"
-                                    onsubmit="return confirm('¿Seguro que deseas eliminar esta especie?');"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar este animal?');"
                                     class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="text-xs text-rose-400 hover:text-rose-300 font-medium">Eliminar</button>
+                                        class="text-xs text-rose-600 dark:text-rose-400 hover:text-rose-500 dark:hover:text-rose-300 font-medium">Eliminar</button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="py-12 text-center text-slate-400">
-                            No hay especies registradas actualmente.
+                        <td colspan="5" class="py-12 text-center text-gray-500 dark:text-slate-400">
+                            No hay animales registrados actualmente.
                         </td>
                     </tr>
                 @endforelse

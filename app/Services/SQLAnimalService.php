@@ -3,12 +3,11 @@
 namespace App\Services;
 
 use App\Contracts\AnimalServiceInterface;
-use Illuminate\Support\Facades\DB;
 use App\Exceptions\AnimalNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class SQLAnimalService implements AnimalServiceInterface
 {
-
     public function all(): array
     {
         $rows = DB::select(
@@ -41,7 +40,7 @@ class SQLAnimalService implements AnimalServiceInterface
             [$id]
         );
 
-        if (!$row) {
+        if (! $row) {
             AnimalNotFoundException::forId($id);
         }
 
@@ -72,7 +71,7 @@ class SQLAnimalService implements AnimalServiceInterface
                 $data['name'],
                 $data['species_id'],
                 (int) $data['age'],
-                $id
+                $id,
             ]
         );
 

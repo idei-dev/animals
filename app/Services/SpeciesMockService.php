@@ -18,22 +18,22 @@ class SpeciesMockService implements SpeciesServiceInterface
     protected array $defaultSpecies = [
         [
             'id' => '1',
-            'name' => 'Perro'
+            'name' => 'Perro',
         ],
         [
             'id' => '2',
-            'name' => 'Gato'
+            'name' => 'Gato',
         ],
         [
             'id' => '3',
-            'name' => 'Loro'
+            'name' => 'Loro',
         ],
     ];
 
     public function __construct()
     {
         // Si no existen datos en sesión, inicializamos con los valores por defecto
-        if (!session()->has($this->sessionKey)) {
+        if (! session()->has($this->sessionKey)) {
             $this->reset();
         }
     }
@@ -91,10 +91,11 @@ class SpeciesMockService implements SpeciesServiceInterface
         $items = $this->all();
         $initialCount = count($items);
 
-        $filtered = array_values(array_filter($items, fn($item) => $item['id'] !== $id));
+        $filtered = array_values(array_filter($items, fn ($item) => $item['id'] !== $id));
 
         if (count($filtered) !== $initialCount) {
             session()->put($this->sessionKey, $filtered);
+
             return true;
         }
 

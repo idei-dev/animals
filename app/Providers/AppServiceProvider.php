@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\AnimalServiceInterface;
+use App\Contracts\SpeciesServiceInterface;
+use App\Services\SQLAnimalService;
+use App\Services\SQLiteSpeciesService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,13 +16,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            \App\Contracts\AnimalServiceInterface::class,
-            \App\Services\SQLAnimalService::class
+            AnimalServiceInterface::class,
+            SQLAnimalService::class
         );
 
         $this->app->singleton(
-            \App\Contracts\SpeciesServiceInterface::class,
-            \App\Services\SQLiteSpeciesService::class
+            SpeciesServiceInterface::class,
+            SQLiteSpeciesService::class
         );
     }
 

@@ -2,14 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Contracts\AnimalServiceInterface;
+use Illuminate\Database\Seeder;
 
 class AnimalSeeder extends Seeder
 {
-
-   public function __construct(
+    public function __construct(
         protected AnimalServiceInterface $animalService
     ) {}
 

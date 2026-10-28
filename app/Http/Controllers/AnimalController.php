@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Contracts\AnimalServiceInterface;
 use App\Contracts\SpeciesServiceInterface;
 use App\Http\Requests\AnimalDataRequest;
@@ -17,12 +16,14 @@ class AnimalController extends Controller
     public function index()
     {
         $animals = $this->animalService->all();
+
         return view('animals.index', ['animals' => $animals]);
     }
 
     public function create()
     {
         $species = $this->speciesService->all();
+
         return view('animals.create', ['species' => $species]);
     }
 
@@ -30,6 +31,7 @@ class AnimalController extends Controller
     {
         $data = $request->validated();
         $this->animalService->create($data);
+
         return redirect()->route('animals.index')->with('success', 'Animal creado exitosamente.');
     }
 
@@ -38,6 +40,7 @@ class AnimalController extends Controller
         try {
             $species = $this->speciesService->all();
             $animal = $this->animalService->find($id);
+
             return view('animals.edit', ['id' => $id, 'animal' => $animal, 'species' => $species]);
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
@@ -49,6 +52,7 @@ class AnimalController extends Controller
         $data = $request->validated();
         try {
             $this->animalService->update($id, $data);
+
             return redirect()->route('animals.index')->with('success', 'Animal actualizado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
@@ -59,6 +63,7 @@ class AnimalController extends Controller
     {
         try {
             $animal = $this->animalService->find($id);
+
             return view('animals.show', ['id' => $id, 'animal' => $animal]);
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
@@ -69,6 +74,7 @@ class AnimalController extends Controller
     {
         try {
             $this->animalService->delete($id);
+
             return redirect()->route('animals.index')->with('success', 'Animal eliminado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->route('animals.index')->with('error', $e->getMessage());
@@ -78,6 +84,7 @@ class AnimalController extends Controller
     public function reset()
     {
         $this->animalService->reset();
+
         return redirect()->route('animals.index')->with('success', 'Todos los animales han sido eliminados.');
     }
 }
