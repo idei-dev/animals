@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -34,7 +34,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'nullable|string|in:admin,employee,customer',
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        $this->userService->create($validatedData);
+
+        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
@@ -42,7 +53,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = $this->userService->find($id);
+
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -50,7 +63,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = $this->userService->find($id);
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -58,7 +73,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$id,
+            'role' => 'required|string|in:admin,employee,customer',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        if (empty($validatedData['password'])) {
+            unset($validatedData['password']);
+        } else {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        }
+
+        $this->userService->update($id, $validatedData);
+
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
@@ -66,6 +96,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->userService->delete($id);
+
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
     }
 }

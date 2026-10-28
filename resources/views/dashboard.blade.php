@@ -5,5 +5,5 @@
         </h2>
     </x-slot>
 
-    Estás conectado!
+    Estás logueado como {{ auth()->user()->name }} y tu rol es {{ auth()->user()->role }}.
 </x-app-layout>
