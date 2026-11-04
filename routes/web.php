@@ -13,7 +13,7 @@ Route::get(
     }
 );
 
-Route::middleware(['auth', 'is_admin'])->resource('/users', UserController::class);
+Route::middleware(['auth', 'user_is:admin,employee'])->resource('/users', UserController::class);
 
 Route::middleware('auth')->group(function () {
     Route::resource('/animals', AnimalController::class);

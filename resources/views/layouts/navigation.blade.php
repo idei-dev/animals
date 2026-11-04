@@ -16,18 +16,19 @@
                         Inicio
                     </x-nav-link>
 
-                    @if (Auth::user()?->role === 'admin')
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-                            Usuarios
-                        </x-nav-link>
-                    @endif
-
+                    @role('admin', 'employee')
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                        Usuarios
+                    </x-nav-link>
                     <x-nav-link :href="route('animals.index')" :active="request()->routeIs('animals.*')">
                         Animales
                     </x-nav-link>
+                    @endrole
+                    @role('admin')
                     <x-nav-link :href="route('species.index')" :active="request()->routeIs('species.*')">
                         Especies
                     </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -110,9 +111,9 @@
                 Inicio
             </x-responsive-nav-link>
             @if (Auth::user()?->role === 'admin')
-                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-                    Usuarios
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                Usuarios
+            </x-responsive-nav-link>
             @endif
             <x-responsive-nav-link :href="route('species.index')" :active="request()->routeIs('species.*')">
                 Especies

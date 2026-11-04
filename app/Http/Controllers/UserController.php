@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\UserServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,7 +17,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userService->all();
+        $users = [];
+        $role = Auth::user()->role;
+        
+        if ($role === 'admin') {
+            $users = $this->userService->all();
+        } else if ($role === 'employee') {
+            $users = $this->userService->customers();
+        } else {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
 
         return view('users.index', compact('users'));
     }

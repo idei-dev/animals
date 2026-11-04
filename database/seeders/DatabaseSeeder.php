@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SpeciesSeeder::class,
             AnimalSeeder::class,
+            AnimalOwnerSeeder::class,
+            AnimalEventSeeder::class,
         ]);
     }
 }

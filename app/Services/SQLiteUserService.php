@@ -12,6 +12,26 @@ class SQLiteUserService implements UserServiceInterface
     public function all(): array
     {
         return DB::table($this->table)
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($item) => (array) $item)
+            ->toArray();
+    }
+
+    public function employees(): array
+    {
+        return DB::table($this->table)
+            ->whereIn('role', ['admin', 'employee'])
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(fn ($item) => (array) $item)
+            ->toArray();
+    }
+
+    public function customers(): array
+    {
+        return DB::table($this->table)
+            ->where('role', 'customer')
             ->orderBy('updated_at', 'desc')
             ->get()
             ->map(fn ($item) => (array) $item)

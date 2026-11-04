@@ -44,6 +44,7 @@
                     </div>
                 </div>
 
+                @role('admin')
                 <div>
                     <label for="role" class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Rol</label>
                     <select name="role"
@@ -68,6 +69,7 @@
                         <p class="text-xs text-rose-600 dark:text-rose-400 mt-1.5 font-medium">{{ $message }}</p>
                     @enderror
                 </div>
+                @endrole
 
                 <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-slate-700">
                     <a href="{{ route('users.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition">Cancelar</a>
