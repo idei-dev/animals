@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Ai\Agents\PetAssist;
+use Illuminate\Support\Str;
 
 Route::get(
     '/',
@@ -23,7 +25,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $mensaje = app(PetAssist::class)->prompt('Responde');
+    $mensaje = Str::markdown($mensaje);
+    return view('dashboard', compact('mensaje'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
