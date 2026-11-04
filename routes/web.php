@@ -13,11 +13,13 @@ Route::get(
     }
 );
 
-Route::middleware(['auth', 'is_admin'])->resource('/users', UserController::class);
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'user_is:admin,employee'])->group(function () {
+    Route::resource('/users', UserController::class);
     Route::resource('/animals', AnimalController::class);
     Route::post('/animals/reset', [AnimalController::class, 'reset'])->name('animals.reset');
+});
+
+Route::middleware(['auth', 'user_is:admin'])->group(function () {
     Route::resource('species', SpeciesController::class);
     Route::post('/species/reset', [SpeciesController::class, 'reset'])->name('species.reset');
 });

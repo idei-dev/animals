@@ -19,6 +19,15 @@ class UserSeeder extends Seeder
             ['name' => 'Cliente',   'email' => 'cliente@example.com',   'role' => 'customer'],
         ];
 
+        // Agregar 10 usuarios de prueba adicionales con rol 'customer'
+        for ($i = 1; $i <= 10; $i++) {
+            $defaultUsers[] = [
+                'name' => "Cliente $i",
+                'email' => "cliente$i@example.com",
+                'role' => 'customer',
+            ];
+        }
+
         $this->userService->reset();
 
         foreach ($defaultUsers as $user) {

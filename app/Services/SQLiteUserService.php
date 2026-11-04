@@ -18,6 +18,26 @@ class SQLiteUserService implements UserServiceInterface
             ->toArray();
     }
 
+    public function employees(): array
+    {
+        return DB::table($this->table)
+            ->whereIn('role', ['employee', 'admin'])
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(fn ($item) => (array) $item)
+            ->toArray();
+    }
+
+    public function customers(): array
+    {
+        return DB::table($this->table)
+            ->where('role', 'customer')
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(fn ($item) => (array) $item)
+            ->toArray();
+    }
+
     public function find(string $id): ?array
     {
         $user = DB::table($this->table)->where('id', $id)->first();

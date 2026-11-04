@@ -24,6 +24,15 @@ class AnimalSeeder extends Seeder
             ['name' => 'Nemo', 'species_id' => 5, 'age' => 1],
         ];
 
+        // Agregar 10 animales de prueba adicionales con especies aleatorias
+        for ($i = 1; $i <= 10; $i++) {
+            $animals[] = [
+                'name' => "Animal $i",
+                'species_id' => rand(1, 5), // Asignar una especie aleatoria entre 1 y 5
+                'age' => rand(1, 15), // Asignar una edad aleatoria entre 1 y 15
+            ];
+        }
+
         $this->animalService->reset();
 
         foreach ($animals as $animal) {

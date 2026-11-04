@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class UserIs
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  Closure(Request): (Response)  $next
+     * @param string[]  ...$roles
+     * @return Response
+     */
+    public function handle(Request $request, Closure $next, ...$roles): Response
+    {
+        if ($request->user()?->role && !\in_array($request->user()->role, $roles)) {
+            abort(403);
+        }
+
+        return $next($request);
+    }
+}

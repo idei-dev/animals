@@ -37,11 +37,9 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'nullable|string|in:admin,employee,customer',
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['password'] = bcrypt('clave'); // Default password for new users
 
         $this->userService->create($validatedData);
 
@@ -76,15 +74,8 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$id,
-            'role' => 'required|string|in:admin,employee,customer',
-            'password' => 'nullable|string|min:8|confirmed',
+            'role' => 'sometimes|string|in:admin,employee,customer',
         ]);
-
-        if (empty($validatedData['password'])) {
-            unset($validatedData['password']);
-        } else {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        }
 
         $this->userService->update($id, $validatedData);
 
