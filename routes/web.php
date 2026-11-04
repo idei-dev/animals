@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Ai\Agents\PetCareSugest;
+use Illuminate\Support\Str;
 
 Route::get(
     '/',
@@ -25,7 +27,10 @@ Route::middleware(['auth', 'user_is:admin'])->group(function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $mensaje = app(PetCareSugest::class)->prompt(
+        "Eres el vendedor llamado Emilio de la veterinaria Pet's Care. Saluda al cliente que está logeado y pregúntale cómo está su mascota. NO OLVIDES OFRECER PRODUCTOS O SERVICIOS DE LA VETERINARIA!");
+    $mensaje = Str::markdown($mensaje ?? 'No se pudo generar el mensaje.');
+    return view('dashboard', compact('mensaje'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
